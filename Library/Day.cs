@@ -15,7 +15,7 @@ namespace WorkingCalendar
 			set;
 		}
 
-		public ShiftCollection Shifts
+		private ShiftCollection Shifts
 		{
 			get;
 			set;
@@ -31,7 +31,8 @@ namespace WorkingCalendar
 
 		public long Duration
 		{
-			get { return Shifts.Duration; }
+			get;
+			private set;
 		}
 
 		/// <summary>
@@ -51,11 +52,53 @@ namespace WorkingCalendar
 		{
 			DayOfWeek = day;
 			Shifts = new ShiftCollection();
+			Duration = 0;
 		}
 
 		#endregion
 
 		#region Methods
+
+		public void AddShift(double hour, double minute, double second, double millisecond, long duration)
+		{
+			DateTime startDate = DateTime.MinValue.AddHours(hour).AddMinutes(minute).AddSeconds(second).AddMilliseconds(millisecond);
+
+			// Ensure that this shift does not conflict with an existing shift
+			foreach (Shift shift in Shifts)
+			{
+				if ((shift.StartTime <= startDate) && (shift.EndTime >= startDate))
+				{
+					throw new ArgumentException("New shift conflicts with existing shift.");
+				}
+			}
+
+			Shifts.Add(new Shift(hour, minute, second, millisecond, duration));
+			Duration += duration;
+		}
+
+		public void RemoveShift(double hour, double minute, double second, double millisecond)
+		{
+			Shift shift;
+
+			// Locate the shift in the array
+			for (int i = 0; i < Shifts.Count; ++i)
+			{
+				shift = Shifts[i];
+
+				if ((shift.StartTime.Hour == hour) &&
+					(shift.StartTime.Minute == minute) &&
+					(shift.StartTime.Second == second) &&
+					(shift.StartTime.Millisecond == millisecond))
+				{
+					// Ensure that we remove the shift's duration from the overall day duration before we
+					// remove it
+					Duration -= shift.Duration;
+					Shifts.Remove(shift);
+					return;
+				}
+			}
+		}
+
 
 		/// <summary>
 		/// Check if the supplied date is contained within a working shift.

@@ -10,19 +10,21 @@ namespace ConsoleTest
 	{
 		static void Main(string[] args)
 		{
-			Calendar calendar = new Calendar(new DayCollection());
+			Calendar calendar = new Calendar(new Week());
 
-			calendar.WorkingDays.GetDay(DayOfWeek.Monday).Shifts.Add(new Shift(9, 30, 0, 0, 1000000000));
-			calendar.WorkingDays.GetDay(DayOfWeek.Monday).Shifts.Add(new Shift(12, 30, 0, 0, 1000000000));
-			calendar.WorkingDays.GetDay(DayOfWeek.Monday).Shifts.Add(new Shift(15, 30, 0, 0, 1000000000));
+			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(12, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(15, 30, 0, 0, 1000000000);
 
-			calendar.WorkingDays.GetDay(DayOfWeek.Tuesday).Shifts.Add(new Shift(9, 30, 0, 0, 1000000000));
-			calendar.WorkingDays.GetDay(DayOfWeek.Tuesday).Shifts.Add(new Shift(12, 30, 0, 0, 1000000000));
-			calendar.WorkingDays.GetDay(DayOfWeek.Tuesday).Shifts.Add(new Shift(15, 30, 0, 0, 1000000000));
+			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(12, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(15, 30, 0, 0, 1000000000);
 
-			calendar.WorkingDays.GetDay(DayOfWeek.Wednesday).Shifts.Add(new Shift(9, 30, 0, 0, 1000000000));
-			calendar.WorkingDays.GetDay(DayOfWeek.Wednesday).Shifts.Add(new Shift(12, 30, 0, 0, 1000000000));
-			calendar.WorkingDays.GetDay(DayOfWeek.Wednesday).Shifts.Add(new Shift(15, 30, 0, 0, 1000000000));
+			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(12, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(15, 30, 0, 0, 1000000000);
+
+			calendar.Week.GetDay(DayOfWeek.Tuesday).RemoveShift(12, 30, 0, 0);
 
 			foreach (Shift shift in calendar.AscendingShifts(new DateTime(2010, 6, 28, 0, 0, 0), new DateTime(2010, 6, 30, 0, 0, 0)))
 			{
@@ -33,6 +35,12 @@ namespace ConsoleTest
 			{
 				System.Diagnostics.Debug.WriteLine(shift.StartTime);
 			}
+
+			System.Diagnostics.Debug.WriteLine("");
+			System.Diagnostics.Debug.WriteLine(calendar.DateAdd(new DateTime(2010, 6, 30, 0, 0, 0), 1500000000));
+
+			System.Diagnostics.Debug.WriteLine("");
+			System.Diagnostics.Debug.WriteLine(calendar.DateAdd(new DateTime(2010, 6, 30, 0, 0, 0), -1500000000));
 		}
 	}
 }

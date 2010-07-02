@@ -9,7 +9,7 @@ namespace WorkingCalendar
 	{
 		#region Properties
 
-		public DayCollection WorkingDays
+		public Week Week
 		{
 			get;
 			set;
@@ -21,7 +21,7 @@ namespace WorkingCalendar
 			{
 				for (int i = 0; i < 7; ++i)
 				{
-					if (WorkingDays.GetDay((DayOfWeek)i).IsWorking) return true;
+					if (Week.GetDay((DayOfWeek)i).IsWorking) return true;
 				}
 
 				return false;
@@ -32,9 +32,9 @@ namespace WorkingCalendar
 
 		#region Constructors
 
-		public Calendar(DayCollection days)
+		public Calendar(Week days)
 		{
-			WorkingDays = days;
+			Week = days;
 		}
 
 		#endregion
@@ -48,7 +48,7 @@ namespace WorkingCalendar
 		/// <returns>True if the date falls within a shift.</returns>
 		public bool IsWorkingDate(DateTime date)
 		{
-			Day workingDay = WorkingDays.GetDay(date.DayOfWeek);
+			Day workingDay = Week.GetDay(date.DayOfWeek);
 
 			if (workingDay == null) return false;
 
@@ -58,7 +58,8 @@ namespace WorkingCalendar
 		}
 
 		/// <summary>
-		/// Custom iterator that produces each shift between the two dates.
+		/// Custom iterator that produces each shift between the two dates.  Enter Date.MaxValue as
+		/// the end date to produce an endless list of shifts.
 		/// </summary>
 		/// <param name="startDate"></param>
 		/// <param name="endDate"></param>
@@ -67,9 +68,8 @@ namespace WorkingCalendar
 		{
 			if (ContainsShifts)
 			{
-
 				// Start with the day appropriate to the supplied ate
-				Day day = WorkingDays.GetDay(startDate.DayOfWeek);
+				Day day = Week.GetDay(startDate.DayOfWeek);
 				DateTime currentDate = startDate;
 
 				// Continue looping until we hit the end date
@@ -87,7 +87,7 @@ namespace WorkingCalendar
 						{
 							currentDate = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day);
 							currentDate = currentDate.AddDays(1);
-							day = WorkingDays.GetDay(currentDate.DayOfWeek);
+							day = Week.GetDay(currentDate.DayOfWeek);
 						}
 					}
 
@@ -110,7 +110,7 @@ namespace WorkingCalendar
 			{
 
 				// Start with the day appropriate to the supplied ate
-				Day day = WorkingDays.GetDay(startDate.DayOfWeek);
+				Day day = Week.GetDay(startDate.DayOfWeek);
 				DateTime currentDate = startDate;
 
 				// Continue looping until we hit the end date
@@ -128,7 +128,7 @@ namespace WorkingCalendar
 						{
 							currentDate = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, 23, 59, 59, 999);
 							currentDate = currentDate.AddDays(-1);
-							day = WorkingDays.GetDay(currentDate.DayOfWeek);
+							day = Week.GetDay(currentDate.DayOfWeek);
 						}
 					}
 
@@ -142,6 +142,79 @@ namespace WorkingCalendar
 						yield return adjustedShift;
 					}
 				}
+			}
+		}
+
+		private DateTime DateAddPositive(DateTime startDate, long duration)
+		{
+			DateTime endDate = startDate;
+			Shift shift;
+
+			while (duration > 0)
+			{
+				// Locate the next working shift
+				shift = Week.GetDay(endDate.DayOfWeek).GetNextShift(endDate);
+
+				if (duration >= shift.Duration)
+				{
+					// Move the end date to the end of the shift, and subtract the length of the
+					// shift from the remaining duration
+					endDate = shift.EndTime;
+					duration -= shift.Duration;
+				}
+				else
+				{
+					// Remaining duration is shorter than the shift
+					endDate = shift.StartTime.AddTicks(duration);
+					duration = 0;
+				}
+			}
+
+			return endDate;
+		}
+
+		public DateTime DateAddNegative(DateTime startDate, long duration)
+		{
+			DateTime endDate = startDate;
+
+			// Invert duration so that comparisons are more logical
+			duration = 0 - duration;
+
+			foreach (Shift shift in DescendingShifts(startDate, DateTime.MinValue))
+			{
+				if (duration >= shift.Duration)
+				{
+					// Move the end date to the start of the shift, and subtract the length of the
+					// shift from the remaining duration
+					endDate = shift.StartTime;
+					duration -= shift.Duration;
+				}
+				else
+				{
+					// Remaining duration is shorter than the shift
+					endDate = shift.EndTime.AddTicks(-duration);
+					duration = 0;
+				}
+
+				if (duration == 0) break;
+			}
+
+			return endDate;
+		}
+
+		public DateTime DateAdd(DateTime startDate, long duration)
+		{
+			if (duration > 0)
+			{
+				return DateAddPositive(startDate, duration);
+			}
+			else if (duration < 0)
+			{
+				return DateAddNegative(startDate, duration);
+			}
+			else
+			{
+				return startDate;
 			}
 		}
 

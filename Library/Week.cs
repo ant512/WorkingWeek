@@ -5,11 +5,11 @@ using System.Text;
 
 namespace WorkingCalendar
 {
-	public class DayCollection
+	public class Week
 	{
 		#region Members
 
-		Day[] mWorkingDays = new Day[7];
+		Day[] mDays = new Day[7];
 
 		#endregion
 
@@ -21,7 +21,7 @@ namespace WorkingCalendar
 			{
 				long duration = 0;
 
-				foreach (Day day in mWorkingDays)
+				foreach (Day day in mDays)
 				{
 					duration += day.Duration;
 				}
@@ -34,11 +34,14 @@ namespace WorkingCalendar
 
 		#region Constructors
 
-		public DayCollection()
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		public Week()
 		{
 			for (int i = 0; i < 7; ++i)
 			{
-				mWorkingDays[i] = new Day((DayOfWeek)i);
+				mDays[i] = new Day((DayOfWeek)i);
 			}
 		}
 
@@ -46,9 +49,14 @@ namespace WorkingCalendar
 
 		#region Methods
 
+		/// <summary>
+		/// Get a day by its DayOfWeek value.
+		/// </summary>
+		/// <param name="dayOfWeek">Day of the week to retrieve.</param>
+		/// <returns>The specified day of the week.</returns>
 		public Day GetDay(DayOfWeek dayOfWeek)
 		{
-			return mWorkingDays[(int)dayOfWeek];
+			return mDays[(int)dayOfWeek];
 		}
 
 		#endregion
