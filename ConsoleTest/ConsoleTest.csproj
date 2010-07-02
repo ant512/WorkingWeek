@@ -47,7 +47,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Library\WorkingWeek.csproj">
+    <ProjectReference Include="..\WorkingWeek\WorkingWeek.csproj">
       <Project>{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}</Project>
       <Name>WorkingWeek</Name>
     </ProjectReference>

@@ -8,8 +8,8 @@
     <ProjectGuid>{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WorkingCalendar</RootNamespace>
-    <AssemblyName>WorkingCalendar</AssemblyName>
+    <RootNamespace>WorkingWeek</RootNamespace>
+    <AssemblyName>WorkingWeek</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "WorkingCalendar\ConsoleTest.csproj", "{8A38332E-816C-440A-B5B2-571ECE67DFD6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{8A38332E-816C-440A-B5B2-571ECE67DFD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWeek", "Library\WorkingWeek.csproj", "{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWeek", "WorkingWeek\WorkingWeek.csproj", "{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
