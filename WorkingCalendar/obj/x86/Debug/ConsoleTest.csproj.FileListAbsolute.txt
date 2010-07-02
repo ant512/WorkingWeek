@@ -1,0 +1,7 @@
+D:\Work\Mercurial\WorkingCalendar\WorkingCalendar\bin\Debug\ConsoleTest.exe
+D:\Work\Mercurial\WorkingCalendar\WorkingCalendar\bin\Debug\ConsoleTest.pdb
+D:\Work\Mercurial\WorkingCalendar\WorkingCalendar\bin\Debug\WorkingCalendar.dll
+D:\Work\Mercurial\WorkingCalendar\WorkingCalendar\bin\Debug\WorkingCalendar.pdb
+D:\Work\Mercurial\WorkingCalendar\WorkingCalendar\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\Work\Mercurial\WorkingCalendar\WorkingCalendar\obj\x86\Debug\ConsoleTest.exe
+D:\Work\Mercurial\WorkingCalendar\WorkingCalendar\obj\x86\Debug\ConsoleTest.pdb
