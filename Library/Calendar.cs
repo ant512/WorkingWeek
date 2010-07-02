@@ -97,8 +97,11 @@ namespace WorkingCalendar
 						Shift adjustedShift = new Shift(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, shift.StartTime.Hour, shift.StartTime.Minute, shift.StartTime.Millisecond), shift.Duration);
 						currentDate = adjustedShift.EndTime;
 
-						// Return the adjusted shift
-						yield return adjustedShift;
+						// Return the adjusted shift if it is within the valid range
+						if (adjustedShift.StartTime < endDate)
+						{
+							yield return adjustedShift;
+						}
 					}
 				}
 			}
@@ -145,8 +148,11 @@ namespace WorkingCalendar
 						Shift adjustedShift = new Shift(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, shift.StartTime.Hour, shift.StartTime.Minute, shift.StartTime.Millisecond), shift.Duration);
 						currentDate = adjustedShift.StartTime.AddMilliseconds(-1);
 
-						// Return the adjusted shift
-						yield return adjustedShift;
+						// Return the adjusted shift if it is within the valid range
+						if (adjustedShift.StartTime > endDate)
+						{
+							yield return adjustedShift;
+						}
 					}
 				}
 			}
@@ -230,6 +236,13 @@ namespace WorkingCalendar
 			return endDate;
 		}
 
+		/// <summary>
+		/// Returns the date produced by adding the supplied duration to the supplied date, but only allowing
+		/// time to pass during working shifts.
+		/// </summary>
+		/// <param name="startDate">Start date.</param>
+		/// <param name="duration">Duration to add to the date.</param>
+		/// <returns>Date produced as a result of adding duration to start date, via way of the shifts in the calendar.</returns>
 		public DateTime DateAdd(DateTime startDate, TimeSpan duration)
 		{
 			if (duration.Ticks > 0)
@@ -240,10 +253,65 @@ namespace WorkingCalendar
 			{
 				return DateAddNegative(startDate, duration);
 			}
-			else
+
+			return startDate;
+		}
+
+		/// <summary>
+		/// Finds the total working time between the two supplied dates.
+		/// </summary>
+		/// <param name="startDate">Date to start from.</param>
+		/// <param name="endDate">Date to end at.</param>
+		/// <returns>A TimeSpan representing the elapsed working time between the two dates.</returns>
+		public TimeSpan DateDiff(DateTime startDate, DateTime endDate)
+		{
+			if (startDate < endDate)
 			{
-				return startDate;
+				return DateDiffPositive(startDate, endDate);
 			}
+			else if (startDate > endDate)
+			{
+				// Switch the dates then just negate the result
+				return DateDiffPositive(endDate, startDate).Negate();
+			}
+
+			return new TimeSpan();
+		}
+
+		/// <summary>
+		/// Find the difference, in working time, between the two dates.  Start date must preceed end date.
+		/// </summary>
+		/// <param name="startDate">Start date.</param>
+		/// <param name="endDate">End date.</param>
+		/// <returns>The difference, in working time, between the two dates.</returns>
+		public TimeSpan DateDiffPositive(DateTime startDate, DateTime endDate)
+		{
+			if (startDate > endDate)
+			{
+				throw new ArgumentException("Start date must preceed end date.");
+			}
+
+			TimeSpan timeDiff = endDate.Subtract(startDate);
+			TimeSpan workDiff = new TimeSpan();
+
+			// Calculate how many weeks difference there are between the two dates,
+			// then calculate how much work time that represents, and add it to the workDiff
+			TimeSpan singleWeek = new TimeSpan(1, 0, 0, 0);
+			long weeks = timeDiff.Ticks / (singleWeek.Ticks * 7);
+
+			if (weeks > 0)
+			{
+				workDiff += TimeSpan.FromTicks(weeks * Week.Duration.Ticks);
+				startDate = startDate.AddDays(weeks * 7);
+			}
+
+			// Allocate remaining fraction of a week
+			foreach (Shift shift in AscendingShifts(startDate, endDate))
+			{
+				workDiff += shift.Duration;
+			}
+
+			return workDiff;
 		}
 
 		#endregion

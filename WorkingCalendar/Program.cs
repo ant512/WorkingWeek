@@ -44,6 +44,12 @@ namespace ConsoleTest
 			System.Diagnostics.Debug.WriteLine(calendar.DateAdd(new DateTime(2010, 6, 30, 0, 0, 0), new TimeSpan(-29, 2, 0, 0)));
 
 			System.Diagnostics.Debug.WriteLine("");
+			System.Diagnostics.Debug.WriteLine(calendar.DateDiff(new DateTime(2010, 6, 30, 0, 0, 0), new DateTime(2010, 7, 1, 0, 0, 0)));
+
+			System.Diagnostics.Debug.WriteLine("");
+			System.Diagnostics.Debug.WriteLine(calendar.DateDiff(new DateTime(2010, 7, 1, 0, 0, 0), new DateTime(2010, 6, 30, 0, 0, 0)));
+
+			System.Diagnostics.Debug.WriteLine("");
 			System.Diagnostics.Debug.WriteLine(calendar.Week.Duration);
 		}
 	}
