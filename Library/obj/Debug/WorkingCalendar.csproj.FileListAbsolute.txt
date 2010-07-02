@@ -1,5 +1,0 @@
-D:\Work\Mercurial\WorkingCalendar\Library\bin\Debug\WorkingCalendar.dll
-D:\Work\Mercurial\WorkingCalendar\Library\bin\Debug\WorkingCalendar.pdb
-D:\Work\Mercurial\WorkingCalendar\Library\obj\Debug\ResolveAssemblyReference.cache
-D:\Work\Mercurial\WorkingCalendar\Library\obj\Debug\WorkingCalendar.dll
-D:\Work\Mercurial\WorkingCalendar\Library\obj\Debug\WorkingCalendar.pdb
