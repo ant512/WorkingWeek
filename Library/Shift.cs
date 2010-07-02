@@ -6,7 +6,7 @@ using System.Text;
 namespace WorkingCalendar
 {
 	/// <summary>
-	/// Immutable representation of a working shift, containing a start time and a duration (in ticks).
+	/// Immutable representation of a working shift, containing a start time and a duration.
 	/// </summary>
 	public sealed class Shift : IComparable
 	{
@@ -75,10 +75,11 @@ namespace WorkingCalendar
 		#region Methods
 
 		/// <summary>
-		/// Compare the shift with another.  Comparison is based on start time.
+		/// Compare the shift with another.  Comparison is based on start time.  If start times are the same,
+		/// comparison is based on duration.
 		/// </summary>
 		/// <param name="obj">Object to compare with.  Should be another shift.</param>
-		/// <returns>Comparison based on start time.</returns>
+		/// <returns>Comparison based on start time, then duration.</returns>
 		public int CompareTo(object obj)
 		{
 			if (!obj.GetType().Equals(this.GetType()))

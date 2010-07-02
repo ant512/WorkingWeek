@@ -5,14 +5,21 @@ using System.Text;
 
 namespace WorkingCalendar
 {
+	/// <summary>
+	/// Represents a working day.
+	/// </summary>
 	public sealed class Day
 	{
+		#region Delegates
+
 		/// <summary>
 		/// Signature for events fired when the shifts are altered.
 		/// </summary>
 		/// <param name="sender">The day containing the shift.</param>
 		/// <param name="shift">The shift that was altered.</param>
 		public delegate void ShiftsAlteredEventHandler(Day sender, Shift shift);
+
+		#endregion
 
 		#region Properties
 
@@ -93,6 +100,14 @@ namespace WorkingCalendar
 
 		#region Methods
 
+		/// <summary>
+		/// Add a new shift to the day.  Shifts cannot overlap.
+		/// </summary>
+		/// <param name="hour">Start hour of the shift.</param>
+		/// <param name="minute">Start minute of the shift.</param>
+		/// <param name="second">Start second of the shift.</param>
+		/// <param name="millisecond">Start millisecond of the shift.</param>
+		/// <param name="duration">Duration of the shift.</param>
 		public void AddShift(double hour, double minute, double second, double millisecond, TimeSpan duration)
 		{
 			DateTime startDate = DateTime.MinValue.AddHours(hour).AddMinutes(minute).AddSeconds(second).AddMilliseconds(millisecond);
@@ -133,7 +148,7 @@ namespace WorkingCalendar
 		}
 
 		/// <summary>
-		/// Remove the shift with the specified start time.
+		/// Remove the shift with the specified start time, if one exists.
 		/// </summary>
 		/// <param name="hour">Hour at which the shift starts.</param>
 		/// <param name="minute">Minute at which the shift starts.</param>
@@ -183,7 +198,7 @@ namespace WorkingCalendar
 		/// when matching the date, so the day, year, etc can be any value.  The assumption is that the working shift pattern will be the
 		/// same for any monday, or any tuesday, and so on.
 		/// </summary>
-		/// <param name="date"></param>
+		/// <param name="date">The date to search for.</param>
 		/// <returns></returns>
 		public Shift FindShift(DateTime date)
 		{
@@ -198,7 +213,7 @@ namespace WorkingCalendar
 		}
 
 		/// <summary>
-		/// Get the next shift after the supplied date.
+		/// Get the next shift after the supplied date.  If the next appropriate shift contains the supplied date, that shift is returned.
 		/// </summary>
 		/// <param name="date"></param>
 		/// <returns></returns>
