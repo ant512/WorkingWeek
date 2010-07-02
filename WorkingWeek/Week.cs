@@ -37,12 +37,7 @@ namespace WorkingWeek
 		{
 			get
 			{
-				for (int i = 0; i < 7; ++i)
-				{
-					if (GetDay((DayOfWeek)i).IsWorking) return true;
-				}
-
-				return false;
+				return mDays.Any(d => d.IsWorking);
 			}
 		}
 
