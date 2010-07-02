@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WorkingCalendar
 {
-	public class Calendar
+	public sealed class Calendar
 	{
 		#region Properties
 
@@ -145,15 +145,25 @@ namespace WorkingCalendar
 			}
 		}
 
-		private DateTime DateAddPositive(DateTime startDate, long duration)
+		private DateTime DateAddPositive(DateTime startDate, TimeSpan duration)
 		{
 			DateTime endDate = startDate;
-			Shift shift;
 
-			while (duration > 0)
+			// Calculate how many weeks we can allocate simultaneously to avoid
+			// iterating over days
+			long weeks = duration.Ticks / Week.Duration.Ticks;
+
+			if (weeks > 0)
 			{
-				// Locate the next working shift
-				shift = Week.GetDay(endDate.DayOfWeek).GetNextShift(endDate);
+				duration -= TimeSpan.FromTicks(weeks * Week.Duration.Ticks);
+				endDate = endDate.AddDays(weeks * 7);
+			}
+
+			// Allocate remaining fraction of a week
+			foreach (Shift shift in AscendingShifts(endDate, DateTime.MaxValue))
+			{
+				// Stop if we've allocated the entire duration
+				if (duration.Ticks == 0) break;
 
 				if (duration >= shift.Duration)
 				{
@@ -165,20 +175,30 @@ namespace WorkingCalendar
 				else
 				{
 					// Remaining duration is shorter than the shift
-					endDate = shift.StartTime.AddTicks(duration);
-					duration = 0;
+					endDate = shift.StartTime.AddTicks(duration.Ticks);
+					duration -= duration;
 				}
 			}
 
 			return endDate;
 		}
 
-		public DateTime DateAddNegative(DateTime startDate, long duration)
+		public DateTime DateAddNegative(DateTime startDate, TimeSpan duration)
 		{
 			DateTime endDate = startDate;
 
 			// Invert duration so that comparisons are more logical
-			duration = 0 - duration;
+			duration = duration.Negate();
+
+			// Calculate how many weeks we can allocate simultaneously to avoid
+			// iterating over days
+			long weeks = duration.Ticks / Week.Duration.Ticks;
+
+			if (weeks > 0)
+			{
+				duration -= TimeSpan.FromTicks(weeks * Week.Duration.Ticks);
+				endDate = endDate.AddDays(weeks * 7);
+			}
 
 			foreach (Shift shift in DescendingShifts(startDate, DateTime.MinValue))
 			{
@@ -192,23 +212,23 @@ namespace WorkingCalendar
 				else
 				{
 					// Remaining duration is shorter than the shift
-					endDate = shift.EndTime.AddTicks(-duration);
-					duration = 0;
+					endDate = shift.EndTime.AddTicks(-duration.Ticks);
+					duration -= duration;
 				}
 
-				if (duration == 0) break;
+				if (duration.Ticks == 0) break;
 			}
 
 			return endDate;
 		}
 
-		public DateTime DateAdd(DateTime startDate, long duration)
+		public DateTime DateAdd(DateTime startDate, TimeSpan duration)
 		{
-			if (duration > 0)
+			if (duration.Ticks > 0)
 			{
 				return DateAddPositive(startDate, duration);
 			}
-			else if (duration < 0)
+			else if (duration.Ticks < 0)
 			{
 				return DateAddNegative(startDate, duration);
 			}

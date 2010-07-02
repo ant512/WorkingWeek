@@ -5,7 +5,7 @@ using System.Text;
 
 namespace WorkingCalendar
 {
-	public class Week
+	public sealed class Week
 	{
 		#region Members
 
@@ -15,19 +15,10 @@ namespace WorkingCalendar
 
 		#region Properties
 
-		public long Duration
+		public TimeSpan Duration
 		{
-			get
-			{
-				long duration = 0;
-
-				foreach (Day day in mDays)
-				{
-					duration += day.Duration;
-				}
-
-				return duration;
-			}
+			get;
+			private set;
 		}
 
 		#endregion
@@ -39,10 +30,28 @@ namespace WorkingCalendar
 		/// </summary>
 		public Week()
 		{
+			Duration = new TimeSpan();
+
 			for (int i = 0; i < 7; ++i)
 			{
 				mDays[i] = new Day((DayOfWeek)i);
+				mDays[i].ShiftAdded += ShiftAdded;
+				mDays[i].ShiftRemoved += ShiftRemoved;
 			}
+		}
+
+		#endregion
+
+		#region Event Handlers
+
+		void ShiftAdded(Day sender, Shift shift)
+		{
+			Duration += shift.Duration;
+		}
+
+		void ShiftRemoved(Day sender, Shift shift)
+		{
+			Duration -= shift.Duration;
 		}
 
 		#endregion

@@ -12,17 +12,17 @@ namespace ConsoleTest
 		{
 			Calendar calendar = new Calendar(new Week());
 
-			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, 1000000000);
-			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(12, 30, 0, 0, 1000000000);
-			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(15, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, new TimeSpan(2, 0, 0));
+			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(12, 30, 0, 0, new TimeSpan(2, 0, 0));
+			calendar.Week.GetDay(DayOfWeek.Monday).AddShift(15, 30, 0, 0, new TimeSpan(2, 0, 0));
 
-			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, 1000000000);
-			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(12, 30, 0, 0, 1000000000);
-			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(15, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, new TimeSpan(2, 0, 0));
+			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(12, 30, 0, 0, new TimeSpan(2, 0, 0));
+			calendar.Week.GetDay(DayOfWeek.Tuesday).AddShift(15, 30, 0, 0, new TimeSpan(2, 0, 0));
 
-			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, 1000000000);
-			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(12, 30, 0, 0, 1000000000);
-			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(15, 30, 0, 0, 1000000000);
+			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, new TimeSpan(2, 0, 0));
+			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(12, 30, 0, 0, new TimeSpan(2, 0, 0));
+			calendar.Week.GetDay(DayOfWeek.Wednesday).AddShift(15, 30, 0, 0, new TimeSpan(2, 0, 0));
 
 			calendar.Week.GetDay(DayOfWeek.Tuesday).RemoveShift(12, 30, 0, 0);
 
@@ -37,10 +37,14 @@ namespace ConsoleTest
 			}
 
 			System.Diagnostics.Debug.WriteLine("");
-			System.Diagnostics.Debug.WriteLine(calendar.DateAdd(new DateTime(2010, 6, 30, 0, 0, 0), 1500000000));
+
+			System.Diagnostics.Debug.WriteLine(calendar.DateAdd(new DateTime(2010, 6, 30, 0, 0, 0), new TimeSpan(29, 2, 3, 0)));
 
 			System.Diagnostics.Debug.WriteLine("");
-			System.Diagnostics.Debug.WriteLine(calendar.DateAdd(new DateTime(2010, 6, 30, 0, 0, 0), -1500000000));
+			System.Diagnostics.Debug.WriteLine(calendar.DateAdd(new DateTime(2010, 6, 30, 0, 0, 0), new TimeSpan(-29, 2, 0, 0)));
+
+			System.Diagnostics.Debug.WriteLine("");
+			System.Diagnostics.Debug.WriteLine(calendar.Week.Duration);
 		}
 	}
 }
