@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WorkingCalendar
+namespace WorkingWeek
 {
 	/// <summary>
 	/// Immutable representation of a working shift, containing a start time and a duration.
