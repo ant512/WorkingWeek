@@ -61,9 +61,9 @@ namespace WorkingCalendar
 		/// Custom iterator that produces each shift between the two dates.  Enter Date.MaxValue as
 		/// the end date to produce an endless list of shifts.
 		/// </summary>
-		/// <param name="startDate"></param>
-		/// <param name="endDate"></param>
-		/// <returns></returns>
+		/// <param name="startDate">The date to start from.</param>
+		/// <param name="endDate">The date to end at.</param>
+		/// <returns>A list of shifts, in ascending order, from startDate to endDate.</returns>
 		public IEnumerable<Shift> AscendingShifts(DateTime startDate, DateTime endDate)
 		{
 			if (ContainsShifts)
@@ -104,6 +104,13 @@ namespace WorkingCalendar
 			}
 		}
 
+		/// <summary>
+		/// Custom iterator that produces each shift between the two dates.  Enter Date.MinValue as
+		/// the end date to produce an endless list of shifts.
+		/// </summary>
+		/// <param name="startDate">The date to start from.</param>
+		/// <param name="endDate">The date to end at.</param>
+		/// <returns>A list of shifts, in descending order, from startDate to endDate.</returns>
 		public IEnumerable<Shift> DescendingShifts(DateTime startDate, DateTime endDate)
 		{
 			if (ContainsShifts)
@@ -197,11 +204,14 @@ namespace WorkingCalendar
 			if (weeks > 0)
 			{
 				duration -= TimeSpan.FromTicks(weeks * Week.Duration.Ticks);
-				endDate = endDate.AddDays(weeks * 7);
+				endDate = endDate.AddDays(-weeks * 7);
 			}
 
-			foreach (Shift shift in DescendingShifts(startDate, DateTime.MinValue))
+			foreach (Shift shift in DescendingShifts(endDate, DateTime.MinValue))
 			{
+				// Stop if we've allocated the entire duration
+				if (duration.Ticks == 0) break;
+
 				if (duration >= shift.Duration)
 				{
 					// Move the end date to the start of the shift, and subtract the length of the
@@ -215,8 +225,6 @@ namespace WorkingCalendar
 					endDate = shift.EndTime.AddTicks(-duration.Ticks);
 					duration -= duration;
 				}
-
-				if (duration.Ticks == 0) break;
 			}
 
 			return endDate;
