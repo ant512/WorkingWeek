@@ -44,7 +44,6 @@
     <Compile Include="Day.cs" />
     <Compile Include="Week.cs" />
     <Compile Include="Shift.cs" />
-    <Compile Include="ShiftCollection.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

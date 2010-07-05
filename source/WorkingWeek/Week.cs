@@ -68,9 +68,8 @@ namespace WorkingWeek
 		/// Called when a new shift is added to one of the week's days.  Increases the
 		/// duraton of the week by the duration of the shift.
 		/// </summary>
-		/// <param name="sender">The day that contains the added shift.</param>
 		/// <param name="shift">The added shift.</param>
-		public void ShiftAdded(Day sender, Shift shift)
+		public void ShiftAdded(Shift shift)
 		{
 			Duration += shift.Duration;
 		}
@@ -79,9 +78,8 @@ namespace WorkingWeek
 		/// Called when a shift is removed from one of the week's days.  Reduces the
 		/// duration of the week by the duration of the shift.
 		/// </summary>
-		/// <param name="sender">The day that contained the removed shift.</param>
 		/// <param name="shift">The removed shift.</param>
-		public void ShiftRemoved(Day sender, Shift shift)
+		public void ShiftRemoved(Shift shift)
 		{
 			Duration -= shift.Duration;
 		}

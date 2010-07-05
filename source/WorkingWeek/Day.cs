@@ -8,16 +8,15 @@ namespace WorkingWeek
 	/// <summary>
 	/// Represents a working day.
 	/// </summary>
-	public sealed class Day
+	sealed class Day
 	{
 		#region Delegates
 
 		/// <summary>
 		/// Signature for events fired when the shifts are altered.
 		/// </summary>
-		/// <param name="sender">The day containing the shift.</param>
 		/// <param name="shift">The shift that was altered.</param>
-		public delegate void ShiftsAlteredEventHandler(Day sender, Shift shift);
+		public delegate void ShiftsAlteredEventHandler(Shift shift);
 
 		#endregion
 
@@ -35,7 +34,7 @@ namespace WorkingWeek
 		/// <summary>
 		/// Collection of shifts.
 		/// </summary>
-		private ShiftCollection Shifts
+		private List<Shift> Shifts
 		{
 			get;
 			set;
@@ -92,7 +91,7 @@ namespace WorkingWeek
 		public Day(DayOfWeek day)
 		{
 			DayOfWeek = day;
-			Shifts = new ShiftCollection();
+			Shifts = new List<Shift>();
 			Duration = new TimeSpan();
 		}
 
@@ -143,7 +142,7 @@ namespace WorkingWeek
 			// Trigger the shift added event
 			if (ShiftAdded != null)
 			{
-				ShiftAdded(this, shift);
+				ShiftAdded(shift);
 			}
 		}
 
@@ -178,7 +177,7 @@ namespace WorkingWeek
 
 			if ((ShiftRemoved != null) && (shift != null))
 			{
-				ShiftRemoved(this, shift);
+				ShiftRemoved(shift);
 			}
 		}
 
