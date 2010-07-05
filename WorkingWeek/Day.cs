@@ -219,11 +219,25 @@ namespace WorkingWeek
 		/// <returns></returns>
 		public Shift GetNextShift(DateTime date)
 		{
+			// Ensure that the supplied date matches this day of the week
+			if (date.DayOfWeek != this.DayOfWeek) throw new ArgumentException("Supplied date contains the wrong day of the week.");
+
+			// Adjust the date to search for so that it consists only of the time; we can ignore the date as it is not relevant
 			DateTime searchTime = DateTime.MinValue.AddHours(date.Hour).AddMinutes(date.Minute).AddSeconds(date.Second).AddMilliseconds(date.Millisecond);
 
 			foreach (Shift shift in Shifts)
 			{
-				if (searchTime <= shift.StartTime) return shift;
+				// Does the shift contain the date?
+				if (searchTime < shift.EndTime)
+				{
+					// If the shift starts after the date, return the entire shift
+					if (searchTime <= shift.StartTime) return shift;
+					
+					// The date occurs somewhere within the shift, so adjust the shift so that it starts at the date and return that
+					TimeSpan duration = shift.Duration - searchTime.Subtract(shift.StartTime);
+
+					return new Shift(searchTime, duration);
+				}
 			}
 
 			return null;
@@ -243,7 +257,17 @@ namespace WorkingWeek
 			{
 				shift = Shifts[i];
 
-				if (searchTime >= shift.StartTime) return shift;
+				// Does the shift contain the date?
+				if (searchTime > shift.StartTime)
+				{
+					// If the shift ends after the date, return the entire shift
+					if (searchTime >= shift.EndTime) return shift;
+
+					// The date occurs somewhere within the shift, so adjust the shift
+					TimeSpan duration = searchTime.Subtract(shift.StartTime);
+
+					return new Shift(shift.StartTime, duration);
+				}
 			}
 
 			return null;
