@@ -88,6 +88,10 @@ namespace WorkingWeek
 
 		#region Constructors
 
+		/// <summary>
+		/// Constructor.
+		/// </summary>
+		/// <param name="day">Day of the week that this day represents.</param>
 		public Day(DayOfWeek day)
 		{
 			DayOfWeek = day;

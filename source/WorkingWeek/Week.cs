@@ -100,8 +100,8 @@ namespace WorkingWeek
 
 		/// <summary>
 		/// Add a new shift to the specified day.  Shifts cannot overlap.
-		/// </summary>m
-		/// <para name="dayOfWeek">Day on which to add the shift.</param>
+		/// </summary>
+		/// <param name="dayOfWeek">Day on which to add the shift.</param>
 		/// <param name="hour">Start hour of the shift.</param>
 		/// <param name="minute">Start minute of the shift.</param>
 		/// <param name="second">Start second of the shift.</param>
@@ -115,7 +115,7 @@ namespace WorkingWeek
 		/// <summary>
 		/// Remove the shift with the specified start time, if one exists.
 		/// </summary>
-		/// <para name="dayOfWeek">Day from which to remove the shift.</param>
+		/// <param name="dayOfWeek">Day from which to remove the shift.</param>
 		/// <param name="hour">Hour at which the shift starts.</param>
 		/// <param name="minute">Minute at which the shift starts.</param>
 		/// <param name="second">Second at which the shift starts.</param>
