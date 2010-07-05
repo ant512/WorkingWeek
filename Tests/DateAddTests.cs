@@ -16,10 +16,10 @@ namespace Tests
 		public void PositiveSingleShift()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 12, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 9, 30, 0), TimeSpan.FromHours(3)));
 		}
@@ -31,10 +31,10 @@ namespace Tests
 		public void PositiveTwoShifts()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 17, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 9, 30, 0), TimeSpan.FromHours(7)));
 		}
@@ -46,10 +46,10 @@ namespace Tests
 		public void PositiveShortStartShift()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 17, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 10, 30, 0), new TimeSpan(6, 0, 0)));
 		}
@@ -61,10 +61,10 @@ namespace Tests
 		public void PositiveShortStartEndShift()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 17, 0, 0), week.DateAdd(new DateTime(2010, 7, 5, 10, 30, 0), new TimeSpan(5, 30, 0)));
 		}
@@ -76,10 +76,10 @@ namespace Tests
 		public void Positive30Days()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			// Allocate 30 days to a working week of 12 hours.  Will take 60 weeks, so compare with 60*7
 			Assert.AreEqual(new DateTime(2010, 7, 5, 9, 30, 0).AddDays(60 * 7), week.DateAdd(new DateTime(2010, 7, 5, 9, 30, 0), new TimeSpan(30, 0, 0, 0)));
@@ -92,10 +92,10 @@ namespace Tests
 		public void NegativeSingleShift()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 9, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 12, 30, 0), TimeSpan.FromHours(-3)));
 		}
@@ -107,10 +107,10 @@ namespace Tests
 		public void NegativeTwoShifts()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 9, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 17, 30, 0), TimeSpan.FromHours(-7)));
 		}
@@ -122,10 +122,10 @@ namespace Tests
 		public void NegativeShortStartShift()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 10, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 17, 30, 0), new TimeSpan(-6, 0, 0)));
 		}
@@ -137,10 +137,10 @@ namespace Tests
 		public void NegativeShortStartEndShift()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new DateTime(2010, 7, 5, 10, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 17, 0, 0), new TimeSpan(-5, -30, 0)));
 		}
@@ -153,10 +153,10 @@ namespace Tests
 		public void Negative30Days()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			// Allocate 30 days to a working week of 12 hours.  Will take 60 weeks, so compare with 60*7
 			Assert.AreEqual(new DateTime(2010, 7, 5, 9, 30, 0), week.DateAdd(new DateTime(2010, 7, 5, 9, 30, 0).AddDays(60 * 7), new TimeSpan(-30, 0, 0, 0)));

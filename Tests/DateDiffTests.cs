@@ -16,10 +16,10 @@ namespace Tests
 		public void TestDateDiff1()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(TimeSpan.FromHours(13), week.DateDiff(new DateTime(2010, 7, 5, 9, 30, 0), new DateTime(2010, 7, 9, 12, 30, 0)));
 		}
@@ -31,10 +31,12 @@ namespace Tests
 		public void TestDateDiff2()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+
+			week.DateDiff(DateTime.Now, new DateTime(2010, 1, 8));
 
 			Assert.AreEqual(new TimeSpan(0, 12, 30, 0, 0), week.DateDiff(new DateTime(2010, 7, 5, 10, 0, 0), new DateTime(2010, 7, 9, 12, 30, 0)));
 		}
@@ -46,10 +48,10 @@ namespace Tests
 		public void TestDateDiff3()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(TimeSpan.FromHours(-13), week.DateDiff(new DateTime(2010, 7, 9, 12, 30, 0), new DateTime(2010, 7, 5, 9, 30, 0)));
 		}
@@ -61,10 +63,10 @@ namespace Tests
 		public void TestDateDiff4()
 		{
 			WorkingWeek.Week week = new WorkingWeek.Week();
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Monday).AddShift(13, 30, 0, 0, TimeSpan.FromHours(4));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Monday, 13, 30, 0, 0, TimeSpan.FromHours(4));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(3));
 
 			Assert.AreEqual(new TimeSpan(0, -12, -30, 0, 0), week.DateDiff(new DateTime(2010, 7, 9, 12, 30, 0), new DateTime(2010, 7, 5, 10, 0, 0)));
 		}

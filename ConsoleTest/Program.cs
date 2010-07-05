@@ -12,19 +12,19 @@ namespace ConsoleTest
 		{
 			Week week = new Week();
 			
-			week.GetDay(DayOfWeek.Monday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(2));
-			week.GetDay(DayOfWeek.Monday).AddShift(12, 30, 0, 0, TimeSpan.FromHours(2));
-			week.GetDay(DayOfWeek.Monday).AddShift(15, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Monday, 9, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Monday, 12, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Monday, 15, 30, 0, 0, TimeSpan.FromHours(2));
 
-			week.GetDay(DayOfWeek.Tuesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(2));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(12, 30, 0, 0, TimeSpan.FromHours(2));
-			week.GetDay(DayOfWeek.Tuesday).AddShift(15, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Tuesday, 9, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Tuesday, 12, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Tuesday, 15, 30, 0, 0, TimeSpan.FromHours(2));
 
-			week.GetDay(DayOfWeek.Wednesday).AddShift(9, 30, 0, 0, TimeSpan.FromHours(2));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(12, 30, 0, 0, TimeSpan.FromHours(2));
-			week.GetDay(DayOfWeek.Wednesday).AddShift(15, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Wednesday, 9, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Wednesday, 12, 30, 0, 0, TimeSpan.FromHours(2));
+			week.AddShift(DayOfWeek.Wednesday, 15, 30, 0, 0, TimeSpan.FromHours(2));
 
-			week.GetDay(DayOfWeek.Tuesday).RemoveShift(12, 30, 0, 0);
+			week.RemoveShift(DayOfWeek.Tuesday, 12, 30, 0, 0);
 			
 			foreach (Shift shift in week.AscendingShifts(new DateTime(2010, 6, 28, 0, 0, 0), new DateTime(2010, 6, 30, 0, 0, 0)))
 			{
