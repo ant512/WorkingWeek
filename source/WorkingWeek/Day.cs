@@ -253,6 +253,9 @@ namespace WorkingWeek
 		/// <returns></returns>
 		public Shift GetPreviousShift(DateTime date)
 		{
+			// Ensure that the supplied date matches this day of the week
+			if (date.DayOfWeek != this.DayOfWeek) throw new ArgumentException("Supplied date contains the wrong day of the week.");
+
 			DateTime searchTime = DateTime.MinValue.AddHours(date.Hour).AddMinutes(date.Minute).AddSeconds(date.Second).AddMilliseconds(date.Millisecond);
 			Shift shift;
 

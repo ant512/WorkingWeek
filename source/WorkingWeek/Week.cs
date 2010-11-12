@@ -35,10 +35,7 @@ namespace WorkingWeek
 		/// </summary>
 		public bool ContainsShifts
 		{
-			get
-			{
-				return mDays.Any(d => d.IsWorking);
-			}
+			get { return mDays.Any(d => d.IsWorking); }
 		}
 
 		#endregion
