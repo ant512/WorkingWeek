@@ -185,7 +185,7 @@ namespace WorkingWeek
 					if (shift != null)
 					{
 						// Ensure that the shift contains the correct date
-						Shift adjustedShift = new Shift(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, shift.StartTime.Hour, shift.StartTime.Minute, shift.StartTime.Millisecond), shift.Duration);
+						Shift adjustedShift = new Shift(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, shift.StartTime.Hour, shift.StartTime.Minute, shift.StartTime.Second, shift.StartTime.Millisecond), shift.Duration);
 						currentDate = adjustedShift.EndTime;
 
 						// Return the adjusted shift if it is within the valid range
@@ -236,7 +236,7 @@ namespace WorkingWeek
 					if (shift != null)
 					{
 						// Ensure that the shift contains the correct date
-						Shift adjustedShift = new Shift(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, shift.StartTime.Hour, shift.StartTime.Minute, shift.StartTime.Millisecond), shift.Duration);
+						Shift adjustedShift = new Shift(new DateTime(currentDate.Year, currentDate.Month, currentDate.Day, shift.StartTime.Hour, shift.StartTime.Minute, shift.StartTime.Second, shift.StartTime.Millisecond), shift.Duration);
 						currentDate = adjustedShift.StartTime.AddMilliseconds(-1);
 
 						// Return the adjusted shift if it is within the valid range
