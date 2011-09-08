@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using WorkingWeek;
 
-namespace ConsoleTest
+namespace WorkingWeek.ConsoleTest
 {
 	class Program
 	{

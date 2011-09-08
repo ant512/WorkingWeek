@@ -1,18 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTest", "ConsoleTest\ConsoleTest.csproj", "{8A38332E-816C-440A-B5B2-571ECE67DFD6}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWeek", "WorkingWeek\WorkingWeek.csproj", "{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{107FE36C-1AB8-48CB-9863-E932FA5484B8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2EF84996-C556-4019-B921-04541D167A55}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
 		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
 		WorkingWeek.vsmdi = WorkingWeek.vsmdi
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWeek", "source\WorkingWeek\WorkingWeek.csproj", "{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWeek.ConsoleTest", "source\WorkingWeek.ConsoleTest\WorkingWeek.ConsoleTest.csproj", "{8A38332E-816C-440A-B5B2-571ECE67DFD6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkingWeek.Tests", "source\WorkingWeek.Tests\WorkingWeek.Tests.csproj", "{107FE36C-1AB8-48CB-9863-E932FA5484B8}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -27,16 +27,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|x86.ActiveCfg = Debug|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|x86.Build.0 = Debug|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|Any CPU.ActiveCfg = Release|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|Mixed Platforms.Build.0 = Release|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|x86.ActiveCfg = Release|x86
-		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|x86.Build.0 = Release|x86
 		{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -47,6 +37,16 @@ Global
 		{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C1EF6EB2-5163-4FC5-B7B2-1B7C1D1E1DBE}.Release|x86.ActiveCfg = Release|Any CPU
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|x86.ActiveCfg = Debug|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Debug|x86.Build.0 = Debug|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|Any CPU.ActiveCfg = Release|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|Mixed Platforms.Build.0 = Release|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|x86.ActiveCfg = Release|x86
+		{8A38332E-816C-440A-B5B2-571ECE67DFD6}.Release|x86.Build.0 = Release|x86
 		{107FE36C-1AB8-48CB-9863-E932FA5484B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{107FE36C-1AB8-48CB-9863-E932FA5484B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{107FE36C-1AB8-48CB-9863-E932FA5484B8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
