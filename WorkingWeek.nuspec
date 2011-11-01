@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>WorkingWeek</id>
+    <version>1.0</version>
+    <authors>ant512</authors>
+    <owners>ant512</owners>
+    <licenseUrl>https://bitbucket.org/ant512/workingweek/src/tip/Licence.txt</licenseUrl>
+    <projectUrl>https://bitbucket.org/ant512/workingweek</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Define a working week of shift patterns and perform date calculations on it.</description>
+    <releaseNotes>First package release.</releaseNotes>
+    <copyright>Copyright 2011</copyright>
+    <tags>working-week date</tags>
+  </metadata>
+</package>
