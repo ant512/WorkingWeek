@@ -10,43 +10,10 @@ namespace WorkingWeek
 	/// </summary>
 	public sealed class Shift : IComparable
 	{
-		#region Properties
-
-		/// <summary>
-		/// Time at which the shift starts.
-		/// </summary>
-		public DateTime StartTime
-		{
-			get;
-			private set;
-		}
-		
-		/// <summary>
-		/// Time at which the shift ends.
-		/// </summary>
-		public DateTime EndTime
-		{
-			get
-			{
-				return StartTime.AddTicks(Duration.Ticks);
-			}
-		}
-
-		/// <summary>
-		/// Duration of the shift.
-		/// </summary>
-		public TimeSpan Duration
-		{
-			get;
-			private set;
-		}
-
-		#endregion
-
 		#region Constructors
 
 		/// <summary>
-		/// Constructor.
+		/// Initializes a new instance of the Shift class.
 		/// </summary>
 		/// <param name="start">Start time.</param>
 		/// <param name="duration">Duration of the shift.</param>
@@ -57,7 +24,7 @@ namespace WorkingWeek
 		}
 
 		/// <summary>
-		/// Constructor.
+		/// Initializes a new instance of the Shift class.
 		/// </summary>
 		/// <param name="hour">Hour at which the shift starts.</param>
 		/// <param name="minute">Minute at which the shift starts.</param>
@@ -69,6 +36,31 @@ namespace WorkingWeek
 			StartTime = DateTime.MinValue.AddHours(hour).AddMinutes(minute).AddSeconds(second).AddMilliseconds(millisecond);
 			Duration = duration;
 		}
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets the time at which the shift starts.
+		/// </summary>
+		public DateTime StartTime { get; private set; }
+
+		/// <summary>
+		/// Gets the time at which the shift ends.
+		/// </summary>
+		public DateTime EndTime
+		{
+			get
+			{
+				return StartTime.AddTicks(Duration.Ticks);
+			}
+		}
+
+		/// <summary>
+		/// Gets the duration of the shift.
+		/// </summary>
+		public TimeSpan Duration { get; private set; }
 
 		#endregion
 

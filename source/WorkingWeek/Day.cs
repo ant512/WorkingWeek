@@ -8,8 +8,23 @@ namespace WorkingWeek
 	/// <summary>
 	/// Represents a working day.
 	/// </summary>
-	sealed class Day
+	internal sealed class Day
 	{
+		#region Constructors
+
+		/// <summary>
+		/// Initializes a new instance of the Day class.
+		/// </summary>
+		/// <param name="day">Day of the week that this day represents.</param>
+		public Day(DayOfWeek day)
+		{
+			DayOfWeek = day;
+			Shifts = new List<Shift>();
+			Duration = new TimeSpan();
+		}
+
+		#endregion
+
 		#region Delegates
 
 		/// <summary>
@@ -19,56 +34,6 @@ namespace WorkingWeek
 		public delegate void ShiftsAlteredEventHandler(Shift shift);
 
 		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// The day of the week represented by this day.
-		/// </summary>
-		public DayOfWeek DayOfWeek
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Collection of shifts.
-		/// </summary>
-		private List<Shift> Shifts
-		{
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Check if the day is a working day or not.  It is a working day if it contains
-		/// any shifts.
-		/// </summary>
-		public bool IsWorking
-		{
-			get
-			{
-				return Shifts.Count > 0;
-			}
-		}
-
-		/// <summary>
-		/// Duration of the shift.
-		/// </summary>
-		public TimeSpan Duration
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Check if this day contains any shifts.
-		/// </summary>
-		/// <returns></returns>
-		public bool ContainsShifts
-		{
-			get { return Shifts.Count > 0; }
-		}
 
 		#region Events
 
@@ -84,20 +49,40 @@ namespace WorkingWeek
 
 		#endregion
 
-		#endregion
-
-		#region Constructors
+		#region Properties
 
 		/// <summary>
-		/// Constructor.
+		/// Gets or sets the day of the week represented by this day.
 		/// </summary>
-		/// <param name="day">Day of the week that this day represents.</param>
-		public Day(DayOfWeek day)
+		public DayOfWeek DayOfWeek { get; set; }
+
+		/// <summary>
+		/// Gets a value indicating whether the day is a working day or not.  It is
+		/// a working day if it contains any shifts.
+		/// </summary>
+		public bool IsWorking
 		{
-			DayOfWeek = day;
-			Shifts = new List<Shift>();
-			Duration = new TimeSpan();
+			get { return Shifts.Count > 0; }
 		}
+
+		/// <summary>
+		/// Gets the duration of the shift.
+		/// </summary>
+		public TimeSpan Duration { get; private set; }
+
+		/// <summary>
+		/// Gets a value indicating whether or not this day contains any shifts.
+		/// </summary>
+		/// <returns></returns>
+		public bool ContainsShifts
+		{
+			get { return Shifts.Count > 0; }
+		}
+
+		/// <summary>
+		/// Gets or sets the collection of shifts.
+		/// </summary>
+		private List<Shift> Shifts { get; set; }
 
 		#endregion
 
@@ -116,7 +101,8 @@ namespace WorkingWeek
 			DateTime startDate = DateTime.MinValue.AddHours(hour).AddMinutes(minute).AddSeconds(second).AddMilliseconds(millisecond);
 
 			// Ensure that this shift does not conflict with an existing shift
-			if (IsWorkingTime(startDate)) {
+			if (IsWorkingTime(startDate))
+			{
 				throw new ArgumentException("New shift conflicts with existing shift.");
 			}
 
@@ -185,24 +171,25 @@ namespace WorkingWeek
 			}
 		}
 
-
 		/// <summary>
 		/// Check if the supplied date is contained within a working shift.
 		/// </summary>
-		/// <param name="date"></param>
-		/// <returns></returns>
+		/// <param name="date">The date to check.</param>
+		/// <returns>True if the supplied date is within a working shift.</returns>
 		public bool IsWorkingTime(DateTime date)
 		{
-			return (FindShift(date) != null);
+			return FindShift(date) != null;
 		}
 
 		/// <summary>
-		/// Finds the shift that contains the supplied date.  Only the hour, minute, second and milliseconds of the date are considered
-		/// when matching the date, so the day, year, etc can be any value.  The assumption is that the working shift pattern will be the
+		/// Finds the shift that contains the supplied date.  Only the hour, minute, second and
+		/// milliseconds of the date are considered when matching the date, so the day, year,
+		/// etc can be any value.  The assumption is that the working shift pattern will be the
 		/// same for any monday, or any tuesday, and so on.
 		/// </summary>
 		/// <param name="date">The date to search for.</param>
-		/// <returns></returns>
+		/// <returns>The shift that contains the supplied date, or null if no shift exists for
+		/// the date.</returns>
 		public Shift FindShift(DateTime date)
 		{
 			DateTime searchTime = DateTime.MinValue.AddHours(date.Hour).AddMinutes(date.Minute).AddSeconds(date.Second).AddMilliseconds(date.Millisecond);
@@ -216,10 +203,11 @@ namespace WorkingWeek
 		}
 
 		/// <summary>
-		/// Get the next shift after the supplied date.  If the next appropriate shift contains the supplied date, that shift is returned.
+		/// Get the next shift after the supplied date.  If the next appropriate shift contains
+		/// the supplied date, that shift is returned.
 		/// </summary>
-		/// <param name="date"></param>
-		/// <returns></returns>
+		/// <param name="date">The date of the shift to search for.</param>
+		/// <returns>The next appropriate shift.</returns>
 		public Shift GetNextShift(DateTime date)
 		{
 			// Ensure that the supplied date matches this day of the week
@@ -247,10 +235,11 @@ namespace WorkingWeek
 		}
 
 		/// <summary>
-		/// Get the shift prior to the supplied date.  If the next appropriate shift contains the supplied date, that shift is returned.
+		/// Get the shift prior to the supplied date.  If the next appropriate shift contains the
+		/// supplied date, that shift is returned.
 		/// </summary>
-		/// <param name="date"></param>
-		/// <returns></returns>
+		/// <param name="date">The date of the shift to search for.</param>
+		/// <returns>The next appropriate shift.</returns>
 		public Shift GetPreviousShift(DateTime date)
 		{
 			// Ensure that the supplied date matches this day of the week

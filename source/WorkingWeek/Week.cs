@@ -15,35 +15,14 @@ namespace WorkingWeek
 		/// <summary>
 		/// Array of days in the week.
 		/// </summary>
-		Day[] mDays = new Day[7];
-
-		#endregion
-
-		#region Properties
-
-		/// <summary>
-		/// Total duration of the work week.
-		/// </summary>
-		public TimeSpan Duration
-		{
-			get;
-			private set;
-		}
-
-		/// <summary>
-		/// Check if the week contains any shifts.
-		/// </summary>
-		public bool ContainsShifts
-		{
-			get { return mDays.Any(d => d.IsWorking); }
-		}
+		private Day[] mDays = new Day[7];
 
 		#endregion
 
 		#region Constructors
 
 		/// <summary>
-		/// Constructor.
+		/// Initializes a new instance of the Week class.
 		/// </summary>
 		public Week()
 		{
@@ -55,6 +34,23 @@ namespace WorkingWeek
 				mDays[i].ShiftAdded += ShiftAdded;
 				mDays[i].ShiftRemoved += ShiftRemoved;
 			}
+		}
+
+		#endregion
+
+		#region Properties
+
+		/// <summary>
+		/// Gets the total duration of the work week.
+		/// </summary>
+		public TimeSpan Duration { get; private set; }
+
+		/// <summary>
+		/// Gets a value indicating whether the week contains any shifts.
+		/// </summary>
+		public bool ContainsShifts
+		{
+			get { return mDays.Any(d => d.IsWorking); }
 		}
 
 		#endregion
@@ -84,16 +80,6 @@ namespace WorkingWeek
 		#endregion
 
 		#region Methods
-
-		/// <summary>
-		/// Get a day by its DayOfWeek value.
-		/// </summary>
-		/// <param name="dayOfWeek">Day of the week to retrieve.</param>
-		/// <returns>The specified day of the week.</returns>
-		private Day GetDay(DayOfWeek dayOfWeek)
-		{
-			return mDays[(int)dayOfWeek];
-		}
 
 		/// <summary>
 		/// Add a new shift to the specified day.  Shifts cannot overlap.
@@ -141,8 +127,8 @@ namespace WorkingWeek
 		/// <summary>
 		/// Check if the given day is a working day.
 		/// </summary>
-		/// <param name="dayOfWeek"></param>
-		/// <returns></returns>
+		/// <param name="dayOfWeek">The day of the week to check.</param>
+		/// <returns>True if the day is a working day.</returns>
 		public bool IsWorking(DayOfWeek dayOfWeek)
 		{
 			return GetDay(dayOfWeek).IsWorking;
@@ -209,7 +195,6 @@ namespace WorkingWeek
 		{
 			if (ContainsShifts)
 			{
-
 				// Start with the day appropriate to the supplied ate
 				Day day = GetDay(startDate.DayOfWeek);
 				DateTime currentDate = startDate;
@@ -247,84 +232,6 @@ namespace WorkingWeek
 					}
 				}
 			}
-		}
-
-		private DateTime DateAddPositive(DateTime startDate, TimeSpan duration)
-		{
-			DateTime endDate = startDate;
-
-			// Calculate how many weeks we can allocate simultaneously to avoid
-			// iterating over days
-			long weeks = duration.Ticks / Duration.Ticks;
-
-			if (weeks > 0)
-			{
-				duration -= TimeSpan.FromTicks(weeks * Duration.Ticks);
-				endDate = endDate.AddDays(weeks * 7);
-			}
-
-			// Allocate remaining fraction of a week
-			foreach (Shift shift in AscendingShifts(endDate, DateTime.MaxValue))
-			{
-				// Stop if we've allocated the entire duration
-				if (duration.Ticks == 0) break;
-
-				if (duration >= shift.Duration)
-				{
-					// Move the end date to the end of the shift, and subtract the length of the
-					// shift from the remaining duration
-					endDate = shift.EndTime;
-					duration -= shift.Duration;
-				}
-				else
-				{
-					// Remaining duration is shorter than the shift
-					endDate = shift.StartTime.AddTicks(duration.Ticks);
-					duration -= duration;
-				}
-			}
-
-			return endDate;
-		}
-
-		private DateTime DateAddNegative(DateTime startDate, TimeSpan duration)
-		{
-			DateTime endDate = startDate;
-
-			// Invert duration so that comparisons are more logical
-			duration = duration.Negate();
-
-			// Calculate how many weeks we can allocate simultaneously to avoid
-			// iterating over days
-			long weeks = duration.Ticks / Duration.Ticks;
-
-			if (weeks > 0)
-			{
-				duration -= TimeSpan.FromTicks(weeks * Duration.Ticks);
-				endDate = endDate.AddDays(-weeks * 7);
-			}
-
-			foreach (Shift shift in DescendingShifts(endDate, DateTime.MinValue))
-			{
-				// Stop if we've allocated the entire duration
-				if (duration.Ticks == 0) break;
-
-				if (duration >= shift.Duration)
-				{
-					// Move the end date to the start of the shift, and subtract the length of the
-					// shift from the remaining duration
-					endDate = shift.StartTime;
-					duration -= shift.Duration;
-				}
-				else
-				{
-					// Remaining duration is shorter than the shift
-					endDate = shift.EndTime.AddTicks(-duration.Ticks);
-					duration -= duration;
-				}
-			}
-
-			return endDate;
 		}
 
 		/// <summary>
@@ -397,6 +304,110 @@ namespace WorkingWeek
 			{
 				return workDiff.Negate();
 			}
+		}
+
+		/// <summary>
+		/// Get a day by its DayOfWeek value.
+		/// </summary>
+		/// <param name="dayOfWeek">Day of the week to retrieve.</param>
+		/// <returns>The specified day of the week.</returns>
+		private Day GetDay(DayOfWeek dayOfWeek)
+		{
+			return mDays[(int)dayOfWeek];
+		}
+
+		/// <summary>
+		/// Adds a positive duration to the supplied start date.
+		/// </summary>
+		/// <param name="startDate">The date to which to add the duration.</param>
+		/// <param name="duration">The duration to add.</param>
+		/// <returns>The resulting date.</returns>
+		private DateTime DateAddPositive(DateTime startDate, TimeSpan duration)
+		{
+			System.Diagnostics.Debug.Assert(duration.Ticks > -1, "Duration must not be negative.");
+
+			DateTime endDate = startDate;
+
+			// Calculate how many weeks we can allocate simultaneously to avoid
+			// iterating over days
+			long weeks = duration.Ticks / Duration.Ticks;
+
+			if (weeks > 0)
+			{
+				duration -= TimeSpan.FromTicks(weeks * Duration.Ticks);
+				endDate = endDate.AddDays(weeks * 7);
+			}
+
+			// Allocate remaining fraction of a week
+			foreach (Shift shift in AscendingShifts(endDate, DateTime.MaxValue))
+			{
+				// Stop if we've allocated the entire duration
+				if (duration.Ticks == 0) break;
+
+				if (duration >= shift.Duration)
+				{
+					// Move the end date to the end of the shift, and subtract the length of the
+					// shift from the remaining duration
+					endDate = shift.EndTime;
+					duration -= shift.Duration;
+				}
+				else
+				{
+					// Remaining duration is shorter than the shift
+					endDate = shift.StartTime.AddTicks(duration.Ticks);
+					duration -= duration;
+				}
+			}
+
+			return endDate;
+		}
+
+		/// <summary>
+		/// Adds a negative duration to the supplied start date.
+		/// </summary>
+		/// <param name="startDate">The date to which to add the duration.</param>
+		/// <param name="duration">The duration to add.</param>
+		/// <returns>The resulting date.</returns>
+		private DateTime DateAddNegative(DateTime startDate, TimeSpan duration)
+		{
+			System.Diagnostics.Debug.Assert(duration.Ticks < 1, "Duration must not be positive.");
+
+			DateTime endDate = startDate;
+
+			// Invert duration so that comparisons are more logical
+			duration = duration.Negate();
+
+			// Calculate how many weeks we can allocate simultaneously to avoid
+			// iterating over days
+			long weeks = duration.Ticks / Duration.Ticks;
+
+			if (weeks > 0)
+			{
+				duration -= TimeSpan.FromTicks(weeks * Duration.Ticks);
+				endDate = endDate.AddDays(-weeks * 7);
+			}
+
+			foreach (Shift shift in DescendingShifts(endDate, DateTime.MinValue))
+			{
+				// Stop if we've allocated the entire duration
+				if (duration.Ticks == 0) break;
+
+				if (duration >= shift.Duration)
+				{
+					// Move the end date to the start of the shift, and subtract the length of the
+					// shift from the remaining duration
+					endDate = shift.StartTime;
+					duration -= shift.Duration;
+				}
+				else
+				{
+					// Remaining duration is shorter than the shift
+					endDate = shift.EndTime.AddTicks(-duration.Ticks);
+					duration -= duration;
+				}
+			}
+
+			return endDate;
 		}
 
 		#endregion
