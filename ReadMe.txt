@@ -16,7 +16,6 @@ Requirements
 The Author
 ----------
 
-  Written by Antony Dzeryn.  For more info, email me at spam_mail250@yahoo.com
-  (that *is* a real email address).
+  Written by Antony Dzeryn.  For more info, email me at ant@simianzombie.com
   
-  Check http://ant.simianzombie.com for my blog.
+  Check http://simianzombie.com for my blog.
